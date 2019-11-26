@@ -1,11 +1,13 @@
 package com.wander.service;
 
 import com.wander.domain.User;
+import com.wander.exception.ObejectNotFoundException;
 import com.wander.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -14,5 +16,14 @@ public class UserService {
 
     public List<User> findAll(){
         return repo.findAll();
+    }
+
+    public User findById(String id){
+        Optional<User> user = repo.findById(id);
+
+        if(user.equals(Optional.empty())){
+            throw new ObejectNotFoundException("Object not found!");
+        }
+        return user.get();
     }
 }
