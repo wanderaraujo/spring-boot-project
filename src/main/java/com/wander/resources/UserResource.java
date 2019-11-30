@@ -1,6 +1,7 @@
 package com.wander.resources;
 
 import com.wander.config.UserDTO;
+import com.wander.domain.Post;
 import com.wander.domain.User;
 import com.wander.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,11 @@ public class UserResource {
         User obj = service.fromDTO(objDto);
         service.update(obj);
         return ResponseEntity.ok().body(new UserDTO(obj));
+    }
+
+    @RequestMapping(value ="/{id}/posts",  method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPost(@PathVariable String id){
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }

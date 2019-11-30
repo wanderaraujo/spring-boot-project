@@ -23,6 +23,7 @@ public class Instantiation implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         userRepository.deleteAll();
+        postRepository.deleteAll();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -36,5 +37,11 @@ public class Instantiation implements CommandLineRunner {
         Post post2 = new Post(null, sdf.parse("22/12/2019"), "Beautiful eyes", "Just look your eyes", new AuthorDTO (alex));
 
         postRepository.saveAll(Arrays.asList(post1, post2));
+
+        maria.getPosts().addAll(Arrays.asList(post1));
+        alex.getPosts().addAll(Arrays.asList(post2));
+
+        userRepository.saveAll(Arrays.asList(maria,alex));
+
     }
 }
